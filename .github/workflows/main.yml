@@ -7,7 +7,7 @@ on:
                 type: string
                 required: true
                 default: "dev"
-                description: "Versão"
+                description: "Versão da nova release"
             numero_card:
                 type: number
                 required: true
