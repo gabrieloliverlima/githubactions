@@ -46,7 +46,7 @@ on:
 jobs:
     gerando_output:
         runs-on: ubuntu-latest
-        steps: exemplo_output
+        steps: 
             - name: Gerando output com shell
               id: exemplo_output
               run: |
@@ -55,3 +55,12 @@ jobs:
 
             - name: Exibindo o output da action exemplo output
               run: echo "${{ steps.exemplo_output.outputs.action_random }}"
+
+            - name: Gerador de Senha
+              id: generatedpassword
+              uses: aammirmirza/RandomPasswordGenerator@v1.1
+              with: 
+                length: 15
+            
+            - name: Exibindo output da action de password
+              run: echo "${{ steps.generatedpassword.outputs.password }}"
