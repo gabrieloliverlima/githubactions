@@ -46,8 +46,11 @@ on:
 jobs:
     gerando_output:
         runs-on: ubuntu-latest
+        outputs:
+            output_shell: ${{ steps.exemplo_output.outputs.action_random }}   #A nível de Job, que será baseado nas Actions
+            output_generatedpassword: ${{ steps.generatedpassword.outputs.password }}
         steps: 
-            - name: Gerando output com shell
+            - name: Gerando output com shell    #A nível de Action
               id: exemplo_output
               run: |
                 ACTION_RANDOM=$(( $RANDOM ))
@@ -56,7 +59,7 @@ jobs:
             - name: Exibindo o output da action exemplo output
               run: echo "${{ steps.exemplo_output.outputs.action_random }}"
 
-            - name: Gerador de Senha
+            - name: Gerador de Senha           #A nível de Action
               id: generatedpassword
               uses: aammirmirza/RandomPasswordGenerator@v1.1
               with: 
@@ -64,3 +67,14 @@ jobs:
             
             - name: Exibindo output da action de password
               run: echo "${{ steps.generatedpassword.outputs.password }}"
+
+    exibindo_valores:                        # Exibir os outputs do Job acima
+        needs: [gerando_output]
+        runs-on: ubuntu-latest
+        steps:
+            - name: exibindo os outputs do Job gerando_output
+              run: |
+                echo "Output Shell: ${{ needs.gerando_output.outputs.output_shell }}"
+                echo "Output Password: ${{ needs.gerando_output.outputs.output_generatedpassword }}"
+            
+        
