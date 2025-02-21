@@ -85,7 +85,7 @@ on:
     workflow_dispatch:
 
 env: 
-    name_artifact: arquivoX
+    name_artifact: arquivox
 
 jobs:
     upload-artifact:
