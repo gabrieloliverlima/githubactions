@@ -77,7 +77,8 @@
 #                 echo "Output Shell: ${{ needs.gerando_output.outputs.output_shell }}"
 #                 echo "Output Password: ${{ needs.gerando_output.outputs.output_generatedpassword }}"
             
-        
+ 
+
 name: Exemplo Artifact         
 run-name: Exemplo workflow para Artifact, executado por ${{ github.actor }}
 on: 
