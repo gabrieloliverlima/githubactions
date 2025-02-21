@@ -119,16 +119,16 @@ jobs:
         runs-on: ubuntu-latest
         needs: [upload-artifact]
         steps:
-          - name: Listagem de arquivos
-            run: ls
+            - name: Listagem de arquivos
+              run: ls
 
-          - name: Download Artifact
-            uses: actions/download-artifact@v4
-            with:
-              name: ${{ env.name_artifact }}
-              
-          - name: Listagem de arquivos
-            run: ls
-      
+            - name: Download Artifact
+              uses: actions/download-artifact@v4
+              with:
+                name: ${{ env.name_artifact }}
+                
+            - name: Listagem de arquivos
+              run: ls
+        
                 
 
