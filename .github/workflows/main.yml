@@ -101,19 +101,19 @@ jobs:
                 echo "Arquivo 3" > ./artefatos/terceiro_arquivo.txt  
                 echo "Arquivo 4" > ./artefatos/quarto_arquivo.txt
             
-    #         - name: Upload Artifact
-    #           uses: actions/upload-artifact@v4
-    #           id: upload_artifact
-    #           with:
-    #             name: ${{ env.name_artifact }}
-    #             path: ./artefatos
+            - name: Upload Artifact
+              uses: actions/upload-artifact@v4
+              id: upload_artifact
+              with:
+                name: ${{ env.name_artifact }}
+                path: ./artefatos
             
-    #         - name: Listagem de arquivos
-    #           uses: ls
+            - name: Listagem de arquivos
+              uses: ls
             
-    #         - name: Gerando Link do Artifact
-    #           run: |
-    #             echo "${{ steps.upload_artifact.outputs.artifact-url }}"
+            - name: Gerando Link do Artifact
+              run: |
+                echo "${{ steps.upload_artifact.outputs.artifact-url }}"
 
     # download-artifact:
     #     runs-on: ubuntu-latest
