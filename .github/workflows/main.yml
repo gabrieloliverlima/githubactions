@@ -1,133 +1,126 @@
-# name: Exemplo Input
-# run-name: Exemplo workflow para Input, executado por ${{ github.actor }}
-# on: 
-#     workflow_dispatch:
-#         inputs:
-#             versao:
-#                 type: string
-#                 required: true
-#                 default: "dev"
-#                 description: "Versão da nova release"
-#             numero_card:
-#                 type: number
-#                 required: true
-#                 description: "Número do card da tarefa desse commit"
-#             fazer_deploy:
-#                 type: boolean
-#                 required: true
-#                 description: "Especifica se deve ou não fazer deploy"
-#             ambiente:
-#                 type: choice
-#                 required: true
-#                 description: "Ambiente de Deploy"
-#                 options:
-#                     - Desenvolvimento
-#                     - Homologação
-#                     - Produção
-# jobs:
-#     valores_input:
-#         runs-on: ubuntu-latest
-#         steps:
-#             - name: Exibindo o contexto de input completo
-#               run: echo "${{ toJson(inputs)}}"
-#             - name: Exibindo os valores individualmente
-#               run: |
-#                 echo "Esses são os valores passados nos inputs"
-#                 echo "A versão é: ${{ inputs.versao }}"
-#                 echo "O card é: ${{ inputs.numero_card }}"
-#                 echo "Deve fazer deploy: ${{ inputs.fazer_deploy }}"
-#                 echo "O ambiente é: ${{ inputs.ambiente }}"
-
-# name: Exemplo Output         
-# run-name: Exemplo workflow para Output, executado por ${{ github.actor }}
-# on: 
-#     workflow_dispatch:
-
-# jobs:
-#     gerando_output:
-#         runs-on: ubuntu-latest
-#         outputs:
-#             output_shell: ${{ steps.exemplo_output.outputs.action_random }}   #A nível de Job, que será baseado nas Actions
-#             output_generatedpassword: ${{ steps.generatedpassword.outputs.password }}
-#         steps: 
-#             - name: Gerando output com shell    #A nível de Action
-#               id: exemplo_output
-#               run: |
-#                 ACTION_RANDOM=$(( $RANDOM ))
-#                 echo "action_random=$ACTION_RANDOM" >> $GITHUB_OUTPUT
-
-#             - name: Exibindo o output da action exemplo output
-#               run: echo "${{ steps.exemplo_output.outputs.action_random }}"
-
-#             - name: Gerador de Senha           #A nível de Action
-#               id: generatedpassword
-#               uses: aammirmirza/RandomPasswordGenerator@v1.1
-#               with: 
-#                 length: 15
-            
-#             - name: Exibindo output da action de password
-#               run: echo "${{ steps.generatedpassword.outputs.password }}"
-
-#     exibindo_valores:                        # Exibir os outputs do Job acima
-#         needs: [gerando_output]
-#         runs-on: ubuntu-latest
-#         steps:
-#             - name: exibindo os outputs do Job gerando_output
-#               run: |
-#                 echo "Output Shell: ${{ needs.gerando_output.outputs.output_shell }}"
-#                 echo "Output Password: ${{ needs.gerando_output.outputs.output_generatedpassword }}"
-
-
-
-name: Exemplo Artifact         
-run-name: Exemplo workflow para Artifact, executado por ${{ github.actor }}
+name: Exemplo Input, Output e Artifact
+run-name: Exemplo workflow para Input, Output e Artifact executado por ${{ github.actor }}
 on: 
-    workflow_dispatch:
-
-env: 
-    name_artifact: arquivox
+  workflow_dispatch:
+    inputs:
+      versao:
+        type: string
+        required: true
+        default: "dev"
+        description: "Versão da nova release"
+      numero_card:
+        type: number
+        required: true
+        description: "Número do card da tarefa desse commit"
+      fazer_deploy:
+        type: boolean
+        required: true
+        description: "Especifica se deve ou não fazer deploy"
+      ambiente:
+        type: choice
+        required: true
+        description: "Ambiente de Deploy"
+        options:
+          - Desenvolvimento
+          - Homologação
+          - Produção
 
 jobs:
-    upload-artifact:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Listagem de arquivos
-              run: ls
-            - name: Gerar arquivos
-              run: |
-                mkdir artefatos
-                echo "Arquivo 1" > ./artefatos/primeiro_arquivo.txt  
-                echo "Arquivo 2" > ./artefatos/segundo_arquivo.txt  
-                echo "Arquivo 3" > ./artefatos/terceiro_arquivo.txt  
-                echo "Arquivo 4" > ./artefatos/quarto_arquivo.txt
-            
-            - name: Upload Artifact
-              uses: actions/upload-artifact@v4
-              id: upload_artifact
-              with:
-                name: ${{ env.name_artifact }}
-                path: ./artefatos
-            
-            - name: Listagem de arquivos
-              run: ls
-            
-            - name: Gerando Link do Artifact
-              run: |
-                echo "${{ steps.upload_artifact.outputs.artifact-url }}"
-
-    download-artifact:
-        runs-on: ubuntu-latest
-        needs: [upload-artifact]
-        steps:
-            - name: Listagem de arquivos
-              run: ls
-
-            - name: Download Artifact
-              uses: actions/download-artifact@v4
-              with:
-                name: ${{ env.name_artifact }}
-                
-            - name: Listagem de arquivos
-              run: ls
+  # Job para exibir os valores de input
+  valores_input:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Exibindo o contexto de input completo
+        run: echo "${{ toJson(inputs)}}"
         
-                
+      - name: Exibindo os valores individualmente
+        run: |
+          echo "Esses são os valores passados nos inputs"
+          echo "A versão é: ${{ inputs.versao }}"
+          echo "O card é: ${{ inputs.numero_card }}"
+          echo "Deve fazer deploy: ${{ inputs.fazer_deploy }}"
+          echo "O ambiente é: ${{ inputs.ambiente }}"
+
+  # Job para gerar outputs
+  gerando_output:
+    runs-on: ubuntu-latest
+    outputs:
+      output_shell: ${{ steps.exemplo_output.outputs.action_random }}
+      output_generatedpassword: ${{ steps.generatedpassword.outputs.password }}
+    steps: 
+      - name: Gerando output com shell
+        id: exemplo_output
+        run: |
+          ACTION_RANDOM=$(( $RANDOM ))
+          echo "action_random=$ACTION_RANDOM" >> $GITHUB_OUTPUT
+
+      - name: Exibindo o output da action exemplo output
+        run: echo "${{ steps.exemplo_output.outputs.action_random }}"
+
+      - name: Gerador de Senha
+        id: generatedpassword
+        uses: aammirmirza/RandomPasswordGenerator@v1.1
+        with: 
+          length: 15
+            
+      - name: Exibindo output da action de password
+        run: echo "${{ steps.generatedpassword.outputs.password }}"
+
+  # Job para exibir os outputs gerados no job anterior
+  exibindo_valores:
+    needs: [gerando_output]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Exibindo os outputs do Job gerando_output
+        run: |
+          echo "Output Shell: ${{ needs.gerando_output.outputs.output_shell }}"
+          echo "Output Password: ${{ needs.gerando_output.outputs.output_generatedpassword }}"
+
+  # Job para upload dos arquivos como artifacts
+  upload_artifact:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Listagem de arquivos
+        run: ls
+
+      - name: Gerar arquivos
+        run: |
+          mkdir artefatos
+          echo "Arquivo 1" > ./artefatos/primeiro_arquivo.txt  
+          echo "Arquivo 2" > ./artefatos/segundo_arquivo.txt  
+          echo "Arquivo 3" > ./artefatos/terceiro_arquivo.txt  
+          echo "Arquivo 4" > ./artefatos/quarto_arquivo.txt
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        id: upload_artifact
+        with:
+          name: ${{ env.name_artifact }}
+          path: ./artefatos
+
+      - name: Listagem de arquivos após upload
+        run: ls
+
+      - name: Gerando Link do Artifact
+        run: |
+          echo "${{ steps.upload_artifact.outputs.artifact-url }}"
+
+  # Job para download do artifact
+  download_artifact:
+    runs-on: ubuntu-latest
+    needs: [upload_artifact]
+    steps:
+      - name: Listagem de arquivos antes do download
+        run: ls
+
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.name_artifact }}
+
+      - name: Listagem de arquivos após download
+        run: ls
+
+# Variáveis de ambiente
+env: 
+  name_artifact: arquivox
