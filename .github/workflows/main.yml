@@ -108,26 +108,26 @@ jobs:
                 name: ${{ env.name_artifact }}
                 path: ./artefatos
             
-            # - name: Listagem de arquivos
-            #   uses: ls
+            - name: Listagem de arquivos
+              run: ls
             
-            # - name: Gerando Link do Artifact
-            #   run: |
-            #     echo "${{ steps.upload_artifact.outputs.artifact-url }}"
+            - name: Gerando Link do Artifact
+              run: |
+                echo "${{ steps.upload_artifact.outputs.artifact-url }}"
 
-    # download-artifact:
-    #     runs-on: ubuntu-latest
-    #     needs: [upload-artifact]
-    #     steps:
-    #         - name: Listagem de arquivos
-    #           run: ls
+    download-artifact:
+        runs-on: ubuntu-latest
+        needs: [upload-artifact]
+        steps:
+            - name: Listagem de arquivos
+              run: ls
 
-    #         - name: Download Artifact
-    #           uses: actions/download-artifact@v4
-    #           with:
-    #             name: ${{ env.name_artifact }}
+            - name: Download Artifact
+              uses: actions/download-artifact@v4
+              with:
+                name: ${{ env.name_artifact }}
                 
-    #         - name: Listagem de arquivos
-    #           run: ls
+            - name: Listagem de arquivos
+              run: ls
         
                 
