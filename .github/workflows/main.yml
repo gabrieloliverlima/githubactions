@@ -1,3 +1,55 @@
+name: Exemplo Artifact         
+run-name: Exemplo workflow para Artifact, executado por ${{ github.actor }}
+on: 
+    workflow_dispatch:
+
+env: 
+    name_artifact: arquivox
+
+jobs:
+    upload-artifact:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Listagem de arquivos
+              run: ls
+            - name: Gerar arquivos
+              run: |
+                mkdir artefatos
+                echo "Arquivo 1" > ./artefatos/primeiro_arquivo.txt  
+                echo "Arquivo 2" > ./artefatos/segundo_arquivo.txt  
+                echo "Arquivo 3" > ./artefatos/terceiro_arquivo.txt  
+                echo "Arquivo 4" > ./artefatos/quarto_arquivo.txt
+            
+    #         - name: Upload Artifact
+    #           uses: actions/upload-artifact@v4
+    #           id: upload_artifact
+    #           with:
+    #             name: ${{ env.name_artifact }}
+    #             path: ./artefatos
+            
+    #         - name: Listagem de arquivos
+    #           uses: ls
+            
+    #         - name: Gerando Link do Artifact
+    #           run: |
+    #             echo "${{ steps.upload_artifact.outputs.artifact-url }}"
+
+    # download-artifact:
+    #     runs-on: ubuntu-latest
+    #     needs: [upload-artifact]
+    #     steps:
+    #         - name: Listagem de arquivos
+    #           run: ls
+
+    #         - name: Download Artifact
+    #           uses: actions/download-artifact@v4
+    #           with:
+    #             name: ${{ env.name_artifact }}
+                
+    #         - name: Listagem de arquivos
+    #           run: ls
+        
+
 # name: Exemplo Input
 # run-name: Exemplo workflow para Input, executado por ${{ github.actor }}
 # on: 
@@ -76,59 +128,3 @@
 #               run: |
 #                 echo "Output Shell: ${{ needs.gerando_output.outputs.output_shell }}"
 #                 echo "Output Password: ${{ needs.gerando_output.outputs.output_generatedpassword }}"
-            
- 
-
-name: Exemplo Artifact         
-run-name: Exemplo workflow para Artifact, executado por ${{ github.actor }}
-on: 
-    workflow_dispatch:
-
-env: 
-    name_artifact: arquivox
-
-jobs:
-    upload-artifact:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Listagem de arquivos
-              run: ls
-            - name: Gerar arquivos
-              run: |
-                mkdir artefatos
-                echo "Arquivo 1" > ./artefatos/primeiro_arquivo.txt  
-                echo "Arquivo 2" > ./artefatos/segundo_arquivo.txt  
-                echo "Arquivo 3" > ./artefatos/terceiro_arquivo.txt  
-                echo "Arquivo 4" > ./artefatos/quarto_arquivo.txt
-            
-            - name: Upload Artifact
-              uses: actions/upload-artifact@v4
-              id: upload_artifact
-              with:
-                name: ${{ env.name_artifact }}
-                path: ./artefatos
-            
-            - name: Listagem de arquivos
-              uses: ls
-            
-            - name: Gerando Link do Artifact
-              run: |
-                echo "${{ steps.upload_artifact.outputs.artifact-url }}"
-
-    download-artifact:
-        runs-on: ubuntu-latest
-        needs: [upload-artifact]
-        steps:
-            - name: Listagem de arquivos
-              run: ls
-
-            - name: Download Artifact
-              uses: actions/download-artifact@v4
-              with:
-                name: ${{ env.name_artifact }}
-                
-            - name: Listagem de arquivos
-              run: ls
-        
-                
-
