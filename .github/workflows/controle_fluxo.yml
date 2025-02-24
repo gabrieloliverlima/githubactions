@@ -15,8 +15,10 @@
 name: Workflow Eventos com Push
 on:
     push:
-        branches: ["main", "feature/*"] #Workflow será executado somente se o push for realizado na
-jobs:                                      #branche "main" e/ou na "feature/*"
+        branches: ["main", "feature/*"] #Workflow será executado somente se o push for realizado na branche "main" e/ou na "feature/*"
+        tags:           #Evento será ativado quando o Push tiver marcado com uma Tag "V". Ex: v1.0.0
+            - v*
+jobs:                                      
     teste:
         runs-on: ubuntu-latest
         steps:
