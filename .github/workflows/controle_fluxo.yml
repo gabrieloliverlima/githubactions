@@ -1,0 +1,11 @@
+name: Workflow Eventos
+on:
+    workflow_dispatch:
+        
+jobs:
+    teste:
+        runs-on: ubuntu-latet
+        steps:
+            - name: Action de teste
+              run: echo "Disparando o evento"
+
