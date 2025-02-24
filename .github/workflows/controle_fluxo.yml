@@ -1,11 +1,29 @@
-name: Workflow Eventos
-on:
-    workflow_dispatch:
+# name: Workflow Eventos com workflow_dispatch
+# on:
+#     workflow_dispatch:
         
-jobs:
+# jobs:
+#     teste:
+#         runs-on: ubuntu-latest
+#         steps:
+#             - name: Action de teste
+#               run: echo "Disparando o evento"
+
+#########################################################################################################
+
+
+name: Workflow Eventos com Push
+on:
+    push:
+        branches: ["main", "feature/*"] #Workflow será executado somente se o push for realizado na
+jobs:                                      #branche "main" e/ou na "feature/*"
     teste:
         runs-on: ubuntu-latest
         steps:
             - name: Action de teste
-              run: echo "Disparando o evento"
+              run: echo "Action exectuadad apenas na branches Main e Feature"
+
+
+#########################################################################################################
+
 
