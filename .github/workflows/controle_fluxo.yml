@@ -21,7 +21,7 @@ jobs:                                      #branche "main" e/ou na "feature/*"
         runs-on: ubuntu-latest
         steps:
             - name: Action de teste
-              run: echo "Action executada apenas na branches Main e Feature"
+              run: echo "Action executada apenas na branches Feature"
 
 #OBS.: O evento será disparado somente na Branche corrente, não afetando as outras Branches mesmo que esteja no mesmo Workflow
 
