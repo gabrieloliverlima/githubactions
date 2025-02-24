@@ -4,7 +4,7 @@ on:
         
 jobs:
     teste:
-        runs-on: ubuntu-latet
+        runs-on: ubuntu-latest
         steps:
             - name: Action de teste
               run: echo "Disparando o evento"
